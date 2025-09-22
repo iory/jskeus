@@ -46,9 +46,9 @@
 #include <png.h>
 #include "eus.h"
 
-extern pointer ___euspng();
+extern pointer ___euspng(context*,int,pointer*);
 static void register_euspng()
-{ add_module_initializer("___euspng", ___euspng);}
+{ add_module_initializer("___euspng", (pointer (*)(context*,int,pointer*))___euspng);}
 
 pointer PNG_READ_IMAGE(register context *ctx, int n, register pointer *argv)
 {

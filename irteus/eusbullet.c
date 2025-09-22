@@ -45,9 +45,9 @@
 
 #include "eus.h"
 
-extern pointer ___eusbullet();
+extern pointer ___eusbullet(context*,int,pointer*);
 static void register_eusbullet()
-{ add_module_initializer("___eusbullet", ___eusbullet);}
+{ add_module_initializer("___eusbullet", (pointer (*)(context*,int,pointer*))___eusbullet);}
 
 extern eusinteger_t C_BT_MakeSphereModel(eusfloat_t r);
 extern eusinteger_t C_BT_MakeBoxModel(eusfloat_t xsize, eusfloat_t ysize, eusfloat_t zsize);

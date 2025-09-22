@@ -159,7 +159,7 @@ all: defun.h $(LIBNR) $(LIBIRTEUS) $(LIBIRTEUSG) $(LIBIRTEUSX) $(LIBIRTEUSIMG) $
 
 .PHONY: defun.h
 defun.h:
-	echo '#include "eus.h"\n#undef defun\npointer TEST();\nvoid test(void) {register context *ctx; pointer mod; defun(ctx,"TEST",mod,TEST,NULL);}' > test.c
+	echo '#include "eus.h"\n#undef defun\npointer TEST();\nvoid test(void) {register context *ctx; pointer mod; defun((context *)ctx,(char *)"TEST",(pointer)mod,(pointer(*)(context*,int,pointer*))TEST,(char *)NULL);}' > test.c
 	echo "// redefine defun for update defun() API () https://github.com/euslisp/EusLisp/pull/116" > defun.h
 	echo "#undef defun" >> defun.h
 	$(CC) $(CFLAGS) $(WFLAGS) -c test.c $(OBJOPT) test.o || echo "#define defun(a, b, c, d, e) defun(a, b, c, d) // for EusLisp < 9.24" >> defun.h

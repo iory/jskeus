@@ -2,8 +2,8 @@
 Changelog for package jskeus
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+1.2.7 (2025-09-23)
+------------------
 * update prototype definition for gcc-15 (`#650 <https://github.com/euslisp/jskeus/issues/650>`_)
 
   * closes #1096878 (https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1096878) and https://tracker.debian.org/news/1669039/jskeus-removed-from-testing/

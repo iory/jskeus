@@ -4,6 +4,23 @@ Changelog for package jskeus
 
 Forthcoming
 -----------
+* update prototype definition for gcc-15 (`#650 <https://github.com/euslisp/jskeus/issues/650>`_)
+
+  * closes #1096878 (https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1096878) and https://tracker.debian.org/news/1669039/jskeus-removed-from-testing/
+
+* Support apple silicon arm architecture (`#647 <https://github.com/euslisp/jskeus/issues/647>`_)
+
+  * [ga/macos-13] Add brew install jpeg
+  * [ga/macos-14] since macos-14, we need to install GL/gl.h for mesalib-glw and X11 for xquartz
+  * [ga] Add test for macos-14 and macos-15 (Apple Silicon)
+  * Include aarch64 for geo.l
+
+* add how to install as System package, see https://bugs.launchpad.net/ubuntu/+source/euslisp/+bug/2096808/comments/8 (`#644 <https://github.com/euslisp/jskeus/issues/644>`_)
+
+* Contributors: Iori Yanokura, Kei Okada
+
+1.2.6 (2024-12-17)
+------------------
 
 [Documentation]
 

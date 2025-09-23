@@ -46,9 +46,9 @@
 
 #include "eus.h"
 
-extern pointer ___irtglc();
+extern pointer ___irtglc(context*,int,pointer*);
 static void register_irtglc()
-{ add_module_initializer("___irtglc", ___irtglc);}
+{ add_module_initializer("___irtglc", (pointer (*)(context*,int,pointer*))___irtglc);}
 
 #define colsize(p) (intval(p->c.ary.dim[1]))
 #define rowsize(p) (intval(p->c.ary.dim[0]))
@@ -89,11 +89,10 @@ pointer CTRANSPOSE_IMAGE_ROWS(ctx,n,argv)
     return((pointer)dst);}}
 
 #include "defun.h" // redefine defun for update defun() API
-pointer ___irtglc(ctx,n,argv,env)
+pointer ___irtglc(ctx,n,argv)
      register context *ctx;
      int n;
      pointer argv[];
-     pointer env;
 {
   pointer mod=argv[0];
   defun(ctx,"CTRANSPOSE-IMAGE-ROWS",mod,CTRANSPOSE_IMAGE_ROWS,NULL);

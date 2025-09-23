@@ -45,9 +45,9 @@
 
 #include "eus.h"
 
-extern pointer ___euspqp();
+extern pointer ___euspqp(context*,int,pointer*);
 static void register_euspqp()
-{ add_module_initializer("___euspqp", ___euspqp);}
+{ add_module_initializer("___euspqp", (pointer (*)(context*,int,pointer*))___euspqp);}
 
 extern eusinteger_t PQP_MakeModel();
 extern void PQP_DeleteModel(eusinteger_t m);

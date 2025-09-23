@@ -44,9 +44,9 @@
 #include "eus.h"
 #include "nr.h"
 #include <math.h>
-extern pointer ___irtc();
+extern pointer ___irtc(context*,int,pointer*);
 static void register_irtc()
-{ add_module_initializer("___irtc", ___irtc);}
+{ add_module_initializer("___irtc", (pointer (*)(context*,int,pointer*))___irtc);}
 
 #define colsize(p) (intval(p->c.ary.dim[1]))
 #define rowsize(p) (intval(p->c.ary.dim[0]))
@@ -1029,11 +1029,10 @@ register pointer *argv;
 }
 
 #include "defun.h" // redefine defun for update defun() API
-pointer ___irtc(ctx,n,argv, env)
+pointer ___irtc(ctx,n,argv)
 register context *ctx;
 int n;
 pointer argv[];
-pointer env;
 {
   pointer mod=argv[0];
   defun(ctx,"ROTM3*",mod,MATTIMES3,NULL);

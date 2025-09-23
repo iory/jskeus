@@ -2,9 +2,9 @@
 #include "eus.h"
 #include <math.h>
 
-extern pointer ___irtgeoc();
+extern pointer ___irtgeoc(context*,int,pointer*);
 static void register_irtgeoc()
-{ add_module_initializer("___irtgeoc", ___irtgeoc);}
+{ add_module_initializer("___irtgeoc", (pointer (*)(context*,int,pointer*))___irtgeoc);}
 
 //
 //
@@ -355,8 +355,8 @@ pointer C_ISNAN (ctx,n,argv)
 }
 
 #include "defun.h" // redefine defun for update defun() API
-pointer ___irtgeoc(ctx,n, argv, env)
-     register context *ctx;int n;pointer *argv;pointer env;
+pointer ___irtgeoc(ctx,n, argv)
+     register context *ctx;int n;pointer *argv;
 {
   defun(ctx,"C-COORDS-TRANSFORM-VECTOR",argv[0],C_COORDS_TRNSFORM_VECTOR,NULL);
   defun(ctx,"C-MATRIX-ROW",argv[0],C_MATRIX_ROW,NULL);

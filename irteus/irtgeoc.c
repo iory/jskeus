@@ -94,7 +94,7 @@ pointer C_MATRIX_ROW(ctx,n,argv)
   numunion nu;
   register pointer result;
   register eusfloat_t *mat, *ret;
-  register eusinteger_t pos,cols,i;
+  register eusinteger_t pos,cols,rows,i,row_idx;
   int setp = 0;
 
   //      0,       1,        2,      3
@@ -107,29 +107,39 @@ pointer C_MATRIX_ROW(ctx,n,argv)
   //if ( (!ismatrix(argv[0])) || (!isint(argv[1])) ) error(E_TYPEMISMATCH); //no check
   mat = argv[0]->c.ary.entity->c.fvec.fv;
   cols = colsize(argv[0]);
-  pos = cols*intval(argv[1]);
+  rows = rowsize(argv[0]);
+  row_idx = intval(argv[1]);
+
+  // ARM: Bounds checking to prevent out-of-bounds access
+  if (row_idx < 0 || row_idx >= rows) {
+    fprintf(stderr, "ERROR: C_MATRIX_ROW bounds violation: row_idx=%ld, rows=%ld\n", (long)row_idx, (long)rows);
+    fflush(stderr);
+    error(E_VECINDEX);
+  }
+
+  pos = cols * row_idx;
 
   if (n==4) {
-    //if (!(isfltvector(argv[2]))) error(E_TYPEMISMATCH); //no check
+    if (!(isfltvector(argv[2]))) error(E_TYPEMISMATCH);
     result = argv[2];
     setp=1;
   } else if (n==3) {
-    //if (!(isfltvector(argv[2]))) error(E_TYPEMISMATCH); //no check
+    if (!(isfltvector(argv[2]))) error(E_TYPEMISMATCH);
     result = argv[2];
   } else { // n == 2
     result = makefvector(cols);
   }
+
   ret = result->c.fvec.fv;
 
+  // ARM: Use array indexing instead of pointer increment for better safety
   if(setp) {
-    mat += pos;
     for(i=0;i<cols;i++) {
-      *mat++ = *ret++;
+      mat[pos + i] = ret[i];
     }
   } else {
-    mat += pos;
     for(i=0;i<cols;i++) {
-      *ret++ = *mat++;
+      ret[i] = mat[pos + i];
     }
   }
 
